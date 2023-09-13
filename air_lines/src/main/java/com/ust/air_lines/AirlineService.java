@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,24 +16,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Service
-public class JsonDataService {
-    private final JsonDataRepository jsonDataRepository;
+public class AirlineService {
+   
 
     @Autowired
     private AirlineRepository ar;
 
  
 
-    @Autowired
-    public JsonDataService(JsonDataRepository jsonDataRepository) {
-        this.jsonDataRepository = jsonDataRepository;
-    }
-
  
 
-    public List<JsonDataEntity> getAllJsonData() {
-        return jsonDataRepository.findAll();
-    }
 
     public String readJsonFromFileSystem(String filePath) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(filePath));
@@ -51,4 +44,10 @@ public class JsonDataService {
     }
 
 
+    public List<Airline> getAllAirlines() {
+        return ar.findAll();
+    }
+    public Airline getAirlineByCode(String code) {
+        return ar.findByCode(code); // Assuming you have a method findByAirlineCode in your AirlineRepository
+    }
 }
